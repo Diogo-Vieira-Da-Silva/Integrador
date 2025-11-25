@@ -1,6 +1,9 @@
 Prioridades:
 
 Tela de login com cpf, telefone, nome e senha que inclui regex (prioridade alta)
+
+nome, sobrenome, cpf(email), telefone, senha, sexo, data da contratação, data de nascimento, diploma, cargo (complementos) 
+
 Modo alternativo de login com email e senha que inclui regex (prioridade baixa)
 
 Logo do sensecare na página de login e na página dos padrão (prioridade baixa)
@@ -10,7 +13,11 @@ Tela inicial com mensagem de bem vindo com as bordas da direita e esquerda em az
 
 Segunda tela onde você vai registra os pacientes, incluindo nome, telefone, sexo,  (prioridade alta)
 
+nome, sobrenome, data de nascimento, cpf, endereço, telefone, nome do(a) responsável, telefone do(a) responsável, sexo, procedimento, enfermeiro(a), histórico de doenças alergias e etc.., medicações, alergias, prioridade de atendimento, especificações
+
 Botões ao lado do paciente registrado para excluir ele ou então adicionar cuidados, como medicina, horários de troca de decúbito, hidratação e etc..(prioridade mediana) 
+
+medicação, banho de leito, hidratação, mudança de decúbito, outro.  observasções, data do cuidado e horário
 
 Agenda para cuidados pendentes e cuidados já concluídos(irá ser adicionado quando marcar um cuidado como concluído) (prioridade mediana)
 
