@@ -1,15 +1,15 @@
 Prioridades:
 
-Tela de login com cpf, telefone, nome e senha que inclui regex (prioridade alta)
+Tela de login com cpf, telefone, nome e senha que inclui regex (prioridade alta)  ✅
 
-nome, sobrenome, cpf(email), telefone, senha, sexo, data da contratação, data de nascimento, diploma, cargo (complementos) 
+nome, sobrenome, cpf(email), telefone, senha, sexo, data da contratação, data de nascimento, diploma, cargo (complementos)   ✅
 
-Modo alternativo de login com email e senha que inclui regex (prioridade baixa)
+Modo alternativo de login com email e senha que inclui regex (prioridade baixa)  ✅
 
-Logo do sensecare na página de login e na página dos padrão (prioridade baixa)
+Logo do sensecare na página de login e na página dos padrão (prioridade baixa)  ✅
 
 
-Tela inicial com mensagem de bem vindo com as bordas da direita e esquerda em azul (prioridade mediana)
+Tela inicial com mensagem de bem vindo com as bordas da direita e esquerda em azul (prioridade mediana)  ✅
 
 Segunda tela onde você vai registra os pacientes, incluindo nome, telefone, sexo,  (prioridade alta)
 
