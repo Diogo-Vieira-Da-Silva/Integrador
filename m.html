@@ -83,7 +83,15 @@
 
         function showInicio() {
             document.getElementById('welcomeMessage').style.display = 'block';
-            document.getElementById('contentArea').innerHTML = '<img src="sensecare.jpg" class="img-fluid mb-4" style="max-width: 300px;">';
+            const patients = JSON.parse(localStorage.getItem('patients')) || [];
+            const patientCount = patients.length;
+            document.getElementById('contentArea').innerHTML = `
+                <img src="sensecare.jpg" class="img-fluid mb-4" style="max-width: 300px;">
+                <p class="text-center">Você tem ${patientCount} pacientes</p>
+                <div class="text-center">
+                    <button onclick="showPacientes()" class="btn btn-primary btn-custom">Ver Pacientes</button>
+                </div>
+            `;
             document.getElementById('footerBtn').style.display = 'block';
         }
 
