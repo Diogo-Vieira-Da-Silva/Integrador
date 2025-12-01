@@ -85,11 +85,25 @@
             document.getElementById('welcomeMessage').style.display = 'block';
             const patients = JSON.parse(localStorage.getItem('patients')) || [];
             const patientCount = patients.length;
+            let pendingAlerts = 0;
+            patients.forEach(patient => {
+                if (patient.cares) {
+                    patient.cares.forEach(care => {
+                        if (care.status === "Pendente") {
+                            pendingAlerts++;
+                        }
+                    });
+                }
+            });
             document.getElementById('contentArea').innerHTML = `
                 <img src="sensecare.jpg" class="img-fluid mb-4" style="max-width: 300px;">
                 <p class="text-center">Você tem ${patientCount} pacientes</p>
+                <div class="text-center mb-3">
+                    <button onclick="showPacientes()" class="btn btn-primary btn-custom">💚 Ver Pacientes</button>
+                </div>
+                <p class="text-center">Você tem ${pendingAlerts} alertas pendentes</p>
                 <div class="text-center">
-                    <button onclick="showPacientes()" class="btn btn-primary btn-custom">Ver Pacientes</button>
+                    <button onclick="showPendingHistories()" class="btn btn-warning btn-custom">🔔 Ver Alertas Pendentes</button>
                 </div>
             `;
             document.getElementById('footerBtn').style.display = 'block';
