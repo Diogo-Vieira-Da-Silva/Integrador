@@ -1,0 +1,112 @@
+ <!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Estilo extra para laterais azuis -->
+    <style>
+        body {
+            background: linear-gradient(to right, #0d6efd 20%, white 20%, white 80%, #0d6efd 80%);
+            min-height: 100vh;
+        }
+        .title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #212529;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+        label {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container d-flex flex-column justify-content-center align-items-center py-5">
+
+        <h1 class="title mb-4 text-center">Login</h1>
+
+        <img src="sensecare.jpg" class="mb-4" width="500" height="500">
+
+        <div class="card shadow p-4" style="max-width: 450px; width: 100%;">
+            <form id="loginForm">
+
+                <div class="mb-3">
+                    <label>Nome:</label>
+                    <input type="text" class="form-control" id="nome" required>
+                </div>
+
+                <div class="mb-3">
+                    <label>Sobrenome:</label>
+                    <input type="text" class="form-control" id="sobrenome" required>
+                </div>
+
+                <div class="mb-3">
+                    <label>CPF ou E-mail:</label>
+                    <input type="text" class="form-control" id="email" required>
+                </div>
+
+                <div class="mb-3">
+                    <label>Telefone:</label>
+                    <input type="number" class="form-control" id="telefone" required>
+                </div>
+
+                <div class="mb-3">
+                    <label>Senha:</label>
+                    <input type="password" class="form-control" id="passwordField" required>
+                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+            <span id="toggleText">Mostrar</span>
+        </button>
+                </div>
+
+                <div class="mb-3">
+                    <label>Sexo:</label>
+                    <select class="form-control" id="sexo" required>
+                        <option value="">Selecione</option>
+                        <option value="masculino">Masculino</option>
+                        <option value="feminino">Feminino</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label>Data da Contratação:</label>
+                    <input type="date" class="form-control" id="dataContratacao" required>
+                </div>
+
+                <div class="mb-3">
+                    <label>Data de Nascimento:</label>
+                    <input type="date" class="form-control" id="dataNascimento" required>
+                </div>
+
+                <div class="mb-3">
+                    <label>Diploma:</label>
+                    <input type="text" class="form-control" id="diploma" required>
+                </div>
+
+                <div class="mb-3">
+                    <label>Cargo:</label>
+                    <input type="text" class="form-control" id="cargo" required>
+                </div>
+
+                <div class="mb-3">
+                    <label>Complementos(Opcional):</label>
+                    <input type="text" class="form-control" id="complementos">
+                </div>
+
+                <button class="btn btn-primary w-100">
+                    Login
+                </button>
+
+            </form>
+        </div>
+
+    </div>
+<script src="script.js"></script>
+</body>
+</html>
