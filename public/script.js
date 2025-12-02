@@ -67,7 +67,7 @@ window.addEventListener('load', function () {
 
     const cpfEmailField = document.getElementById('email');
 
-    form.addEventListener('submit', function (e) {
+    form.addEventListener('submit', async function (e) {
         e.preventDefault();
 
         if (!form.checkValidity()) {
@@ -105,21 +105,43 @@ window.addEventListener('load', function () {
         const data = {
             nome: getVal('nome'),
             sobrenome: getVal('sobrenome'),
-            cpfEmail: value,
+            cpf_email: value, // cpf or email
             telefone: telefone,
             senha: getVal('passwordField'),
             sexo: getVal('sexo'),
-            dataContratacao: getVal('dataContratacao'),
-            dataNascimento: getVal('dataNascimento'),
+            data_contratacao: getVal('dataContratacao'),
+            data_nascimento: getVal('dataNascimento'),
             diploma: getVal('diploma'),
             cargo: getVal('cargo'),
             complementos: getVal('complementos')
         };
 
-        console.log(data);
-        localStorage.setItem('currentUser', JSON.stringify(data));
-        console.log('Dados salvos:', data);
-        window.location.href = 'm.html';
+        // First, register the nurse
+        try {
+            await fetch('/Enfermeiro', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+        } catch (error) {
+            console.error('Erro ao registrar Enfermeiro:', error);
+        }
+
+        // Then login
+        try {
+            const loginResponse = await fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ cpfEmail: value, senha: getVal('passwordField') })
+            });
+            if (loginResponse.ok) {
+                window.location.href = 'm.html';
+            } else {
+                alert('Falha no login');
+            }
+        } catch (error) {
+            console.error('Erro no login:', error);
+        }
     });
 })();
 
