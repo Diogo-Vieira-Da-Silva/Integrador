@@ -105,9 +105,9 @@ window.addEventListener('load', function () {
         const data = {
             nome: getVal('nome'),
             sobrenome: getVal('sobrenome'),
-            cpfEmail: value,
+            email: value,
             telefone: telefone,
-            senha: getVal('passwordField'),
+            passwordField: getVal('passwordField'),
             sexo: getVal('sexo'),
             dataContratacao: getVal('dataContratacao'),
             dataNascimento: getVal('dataNascimento'),
@@ -117,9 +117,24 @@ window.addEventListener('load', function () {
         };
 
         console.log(data);
-        localStorage.setItem('currentUser', JSON.stringify(data));
-        console.log('Dados salvos:', data);
-        window.location.href = 'm.html';
+
+        // Enviar dados para o servidor
+        fetch('/enfermeiros', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log('Enfermeiro adicionado:', result);
+            localStorage.setItem('currentUser', JSON.stringify(data));
+            console.log('Dados salvos localmente:', data);
+            window.location.href = 'm.html';
+        })
+        .catch(error => {
+            console.error('Erro ao adicionar enfermeiro:', error);
+            alert('Erro ao salvar dados.');
+        });
     });
 })();
 

@@ -328,13 +328,28 @@
                 alergias: document.getElementById('alergias').value,
                 especificacoes: document.getElementById('especificacoes').value
             };
-            let patients = JSON.parse(localStorage.getItem('patients')) || [];
-            patients.push(patient);
-            localStorage.setItem('patients', JSON.stringify(patients));
-            form.reset();
-            const modal = bootstrap.Modal.getInstance(document.getElementById('addPatientModal'));
-            modal.hide();
-            showPacientes(); // refresh the list
+
+            // Enviar dados para o servidor
+            fetch('/pacientes', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(patient)
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Paciente adicionado:', result);
+                let patients = JSON.parse(localStorage.getItem('patients')) || [];
+                patients.push(patient);
+                localStorage.setItem('patients', JSON.stringify(patients));
+                form.reset();
+                const modal = bootstrap.Modal.getInstance(document.getElementById('addPatientModal'));
+                modal.hide();
+                showPacientes(); // refresh the list
+            })
+            .catch(error => {
+                console.error('Erro ao adicionar paciente:', error);
+                alert('Erro ao salvar paciente.');
+            });
         }
 
         function recordAlert(type, description) {
