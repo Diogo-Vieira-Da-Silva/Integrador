@@ -1,5 +1,4 @@
-// Função para inicializar o toggle da senha (somente se os elementos existirem)
-function initPasswordToggle() {
+ function initPasswordToggle() {
     const passwordField = document.getElementById('passwordField');
     const toggleButton = document.getElementById('togglePassword');
     const toggleText = document.getElementById('toggleText');
