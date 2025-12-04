@@ -103,7 +103,8 @@
                 </div>
                 <p class="text-center">Você tem ${pendingAlerts} alertas pendentes</p>
                 <div class="text-center">
-                    <button onclick="showPendingHistories()" class="btn btn-warning btn-custom">🔔 Ver Alertas Pendentes</button>
+                   <button onclick="showPendingHistories()" class="btn btn-success btn-custom">🔔 Ver Alertas Pendentes</button>
+
                 </div>
             `;
             document.getElementById('footerBtn').style.display = 'block';
@@ -300,7 +301,7 @@
 
         function showPulseira() {
             document.getElementById('welcomeMessage').style.display = 'none';
-            document.getElementById('contentArea').innerHTML = '<button onclick="showAlertas()" class="btn btn-primary btn-custom">Conectar</button>';
+            document.getElementById('contentArea').innerHTML = '<button onclick="showAlertas()" class="btn btn-success btn-custom">Conectar</button>';
             document.getElementById('footerBtn').style.display = 'none';
         }
 

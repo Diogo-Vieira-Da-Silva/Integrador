@@ -23,4 +23,4 @@ Agenda para cuidados pendentes e cuidados já concluídos(irá ser adicionado qu
 
 Botão de sair, o que vai te levar para a tela de login(prioridade baixa) ✅
 
-Botão de conectar com pulseira (abrirá uma pequena página com os alertas verde, amarelo e vermelho e as descrições para quando são soados, e ao clicar neles, vai gerar um alerta simulando caso fossem realmente soados e eles ficarão registrados) (prioridade alta) 
+Botão de conectar com pulseira (abrirá uma pequena página com os alertas verde, amarelo e vermelho e as descrições para quando são soados, e ao clicar neles, vai gerar um alerta simulando caso fossem realmente soados e eles ficarão registrados) (prioridade alta) ✅
