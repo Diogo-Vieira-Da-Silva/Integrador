@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -75,6 +75,19 @@
         const saved = JSON.parse(localStorage.getItem('currentUser'));
         if (saved && saved.nome) {
             document.getElementById('welcomeMessage').textContent = 'Bem vindo(a) ' + saved.nome;
+        }
+
+        // Load patients from DB
+        if (saved && saved.id) {
+            fetch('/pacientes?nurse_id=' + saved.id)
+            .then(response => response.json())
+            .then(patients => {
+                localStorage.setItem('patients', JSON.stringify(patients));
+                console.log('Pacientes carregados:', patients);
+            })
+            .catch(error => {
+                console.error('Erro ao carregar pacientes:', error);
+            });
         }
 
         function logout() {
@@ -157,9 +170,25 @@
         function deletePatient(index) {
             if (confirm('Tem certeza que deseja deletar este paciente?')) {
                 let patients = JSON.parse(localStorage.getItem('patients')) || [];
-                patients.splice(index, 1);
-                localStorage.setItem('patients', JSON.stringify(patients));
-                showPacientes();
+                const patientId = patients[index].id;
+                fetch('/pacientes/' + patientId, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(result => {
+                    console.log('Paciente deletado:', result);
+                    // Reload patients
+                    fetch('/pacientes?nurse_id=' + saved.id)
+                    .then(response => response.json())
+                    .then(updatedPatients => {
+                        localStorage.setItem('patients', JSON.stringify(updatedPatients));
+                        showPacientes();
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao deletar paciente:', error);
+                    alert('Erro ao deletar paciente.');
+                });
             }
         }
 
@@ -313,6 +342,7 @@
                 return;
             }
             const patient = {
+                nurse_id: saved.id,
                 primeiroNome: document.getElementById('primeiroNome').value,
                 sobrenome: document.getElementById('sobrenome').value,
                 dataNascimento: document.getElementById('dataNascimento').value,
@@ -340,13 +370,20 @@
             .then(response => response.json())
             .then(result => {
                 console.log('Paciente adicionado:', result);
-                let patients = JSON.parse(localStorage.getItem('patients')) || [];
-                patients.push(patient);
-                localStorage.setItem('patients', JSON.stringify(patients));
-                form.reset();
-                const modal = bootstrap.Modal.getInstance(document.getElementById('addPatientModal'));
-                modal.hide();
-                showPacientes(); // refresh the list
+                // Reload patients from DB
+                fetch('/pacientes?nurse_id=' + saved.id)
+                .then(response => response.json())
+                .then(updatedPatients => {
+                    localStorage.setItem('patients', JSON.stringify(updatedPatients));
+                    form.reset();
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('addPatientModal'));
+                    modal.hide();
+                    showPacientes(); // refresh the list
+                })
+                .catch(error => {
+                    console.error('Erro ao recarregar pacientes:', error);
+                    alert('Paciente adicionado, mas erro ao atualizar lista.');
+                });
             })
             .catch(error => {
                 console.error('Erro ao adicionar paciente:', error);

@@ -1,4 +1,4 @@
- function initPasswordToggle() {
+  function initPasswordToggle() {
     const passwordField = document.getElementById('passwordField');
     const toggleButton = document.getElementById('togglePassword');
     const toggleText = document.getElementById('toggleText');
@@ -30,6 +30,7 @@ window.addEventListener('load', function () {
 
     if (saved) {
         const mapping = [
+            ['id', 'id'],
             ['nome', 'nome'],
             ['sobrenome', 'sobrenome'],
             ['email', 'cpfEmail'],
@@ -69,71 +70,96 @@ window.addEventListener('load', function () {
     form.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        if (!form.checkValidity()) {
-            alert('Preencha todos os campos obrigatórios.');
+        const isExisting = document.getElementById('existingMode').checked;
+        const id = document.getElementById('id').value.trim();
+
+        if (!id) {
+            alert('Preencha o ID.');
             return;
         }
 
-        if (!cpfEmailField) {
-            alert('Campo de CPF/E-mail não encontrado.');
-            return;
+        if (isExisting) {
+            // Login with existing ID
+            fetch('/enfermeiros/' + id)
+            .then(response => response.json())
+            .then(existingNurse => {
+                if (existingNurse) {
+                    console.log('Enfermeiro existente encontrado:', existingNurse);
+                    localStorage.setItem('currentUser', JSON.stringify(existingNurse));
+                    window.location.href = 'm.html';
+                } else {
+                    alert('ID não encontrado.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao buscar enfermeiro:', error);
+                alert('Erro ao fazer login.');
+            });
+        } else {
+            // Register new nurse
+            if (!form.checkValidity()) {
+                alert('Preencha todos os campos obrigatórios.');
+                return;
+            }
+
+            const cpfEmailField = document.getElementById('email');
+            const value = cpfEmailField.value.trim();
+            const emailRegex = /^[a-zA-Z0-9]+@gmail\.com$/;
+            const cpfRegex = /^\d{11}$/;
+
+            if (!emailRegex.test(value) && !cpfRegex.test(value)) {
+                alert('CPF deve ter exatamente 11 números ou e-mail deve ser no formato usuario@gmail.com');
+                return;
+            }
+
+            const telefoneEl = document.getElementById('telefone');
+            const telefone = telefoneEl ? telefoneEl.value : '';
+            if (!/^\d{13}$/.test(telefone)) {
+                alert('Telefone deve ter exatamente 13 números.');
+                return;
+            }
+
+            // Coletar dados de forma defensiva
+            const getVal = id => {
+                const el = document.getElementById(id);
+                return el ? el.value : '';
+            };
+
+            const data = {
+                id: id,
+                nome: getVal('nome'),
+                sobrenome: getVal('sobrenome'),
+                email: value,
+                telefone: telefone,
+                passwordField: getVal('passwordField'),
+                sexo: getVal('sexo'),
+                dataContratacao: getVal('dataContratacao'),
+                dataNascimento: getVal('dataNascimento'),
+                diploma: getVal('diploma'),
+                cargo: getVal('cargo'),
+                complementos: getVal('complementos')
+            };
+
+            console.log(data);
+
+            // Enviar dados para o servidor
+            fetch('/enfermeiros', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Enfermeiro adicionado:', result);
+                localStorage.setItem('currentUser', JSON.stringify(data));
+                console.log('Dados salvos localmente:', data);
+                window.location.href = 'm.html';
+            })
+            .catch(error => {
+                console.error('Erro ao adicionar enfermeiro:', error);
+                alert('Erro ao salvar dados.');
+            });
         }
-
-        const value = cpfEmailField.value.trim();
-        const emailRegex = /^[a-zA-Z0-9]+@gmail\.com$/;
-        const cpfRegex = /^\d{11}$/;
-
-        if (!emailRegex.test(value) && !cpfRegex.test(value)) {
-            alert('CPF deve ter exatamente 11 números ou e-mail deve ser no formato usuario@gmail.com');
-            return;
-        }
-
-        const telefoneEl = document.getElementById('telefone');
-        const telefone = telefoneEl ? telefoneEl.value : '';
-        if (!/^\d{13}$/.test(telefone)) {
-            alert('Telefone deve ter exatamente 13 números.');
-            return;
-        }
-
-        // Coletar dados de forma defensiva
-        const getVal = id => {
-            const el = document.getElementById(id);
-            return el ? el.value : '';
-        };
-
-        const data = {
-            nome: getVal('nome'),
-            sobrenome: getVal('sobrenome'),
-            email: value,
-            telefone: telefone,
-            passwordField: getVal('passwordField'),
-            sexo: getVal('sexo'),
-            dataContratacao: getVal('dataContratacao'),
-            dataNascimento: getVal('dataNascimento'),
-            diploma: getVal('diploma'),
-            cargo: getVal('cargo'),
-            complementos: getVal('complementos')
-        };
-
-        console.log(data);
-
-        // Enviar dados para o servidor
-        fetch('/enfermeiros', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(result => {
-            console.log('Enfermeiro adicionado:', result);
-            localStorage.setItem('currentUser', JSON.stringify(data));
-            console.log('Dados salvos localmente:', data);
-            window.location.href = 'm.html';
-        })
-        .catch(error => {
-            console.error('Erro ao adicionar enfermeiro:', error);
-            alert('Erro ao salvar dados.');
-        });
     });
 })();
 

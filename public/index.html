@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -38,65 +38,81 @@
             <form id="loginForm">
 
                 <div class="mb-3">
-                    <label>Nome:</label>
-                    <input type="text" class="form-control" id="nome" required>
+                    <label>
+                        <input type="radio" name="loginMode" value="existing" id="existingMode" checked> Entrar com ID existente
+                    </label>
+                    <label>
+                        <input type="radio" name="loginMode" value="new" id="newMode"> Cadastrar novo enfermeiro
+                    </label>
                 </div>
 
                 <div class="mb-3">
-                    <label>Sobrenome:</label>
-                    <input type="text" class="form-control" id="sobrenome" required>
+                    <label>ID:</label>
+                    <input type="text" class="form-control" id="id" required>
                 </div>
 
-                <div class="mb-3">
-                    <label>CPF ou E-mail:</label>
-                    <input type="text" class="form-control" id="email" required>
-                </div>
+                <div id="newFields" style="display: none;">
+                    <div class="mb-3">
+                        <label>Nome:</label>
+                        <input type="text" class="form-control" id="nome">
+                    </div>
 
-                <div class="mb-3">
-                    <label>Telefone:</label>
-                    <input type="number" class="form-control" id="telefone" required>
-                </div>
+                    <div class="mb-3">
+                        <label>Sobrenome:</label>
+                        <input type="text" class="form-control" id="sobrenome">
+                    </div>
 
-                <div class="mb-3">
-                    <label>Senha:</label>
-                    <input type="password" class="form-control" id="passwordField" required>
-                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-            <span id="toggleText">Mostrar</span>
-        </button>
-                </div>
+                    <div class="mb-3">
+                        <label>CPF ou E-mail:</label>
+                        <input type="text" class="form-control" id="email">
+                    </div>
 
-                <div class="mb-3">
-                    <label>Sexo:</label>
-                    <select class="form-control" id="sexo" required>
-                        <option value="">Selecione</option>
-                        <option value="masculino">Masculino</option>
-                        <option value="feminino">Feminino</option>
-                    </select>
-                </div>
+                    <div class="mb-3">
+                        <label>Telefone:</label>
+                        <input type="number" class="form-control" id="telefone">
+                    </div>
 
-                <div class="mb-3">
-                    <label>Data da Contratação:</label>
-                    <input type="date" class="form-control" id="dataContratacao" required>
-                </div>
+                    <div class="mb-3">
+                        <label>Senha:</label>
+                        <input type="password" class="form-control" id="passwordField">
+                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                <span id="toggleText">Mostrar</span>
+            </button>
+                    </div>
 
-                <div class="mb-3">
-                    <label>Data de Nascimento:</label>
-                    <input type="date" class="form-control" id="dataNascimento" required>
-                </div>
+                    <div class="mb-3">
+                        <label>Sexo:</label>
+                        <select class="form-control" id="sexo">
+                            <option value="">Selecione</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="feminino">Feminino</option>
+                        </select>
+                    </div>
 
-                <div class="mb-3">
-                    <label>Diploma:</label>
-                    <input type="text" class="form-control" id="diploma" required>
-                </div>
+                    <div class="mb-3">
+                        <label>Data da Contratação:</label>
+                        <input type="date" class="form-control" id="dataContratacao">
+                    </div>
 
-                <div class="mb-3">
-                    <label>Cargo:</label>
-                    <input type="text" class="form-control" id="cargo" required>
-                </div>
+                    <div class="mb-3">
+                        <label>Data de Nascimento:</label>
+                        <input type="date" class="form-control" id="dataNascimento">
+                    </div>
 
-                <div class="mb-3">
-                    <label>Complementos(Opcional):</label>
-                    <input type="text" class="form-control" id="complementos">
+                    <div class="mb-3">
+                        <label>Diploma:</label>
+                        <input type="text" class="form-control" id="diploma">
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Cargo:</label>
+                        <input type="text" class="form-control" id="cargo">
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Complementos(Opcional):</label>
+                        <input type="text" class="form-control" id="complementos">
+                    </div>
                 </div>
 
                 <button class="btn btn-primary w-100">
@@ -107,6 +123,21 @@
         </div>
 
     </div>
+<script>
+document.getElementById('existingMode').addEventListener('change', function() {
+    document.getElementById('newFields').style.display = 'none';
+    document.getElementById('id').required = true;
+    ['nome', 'sobrenome', 'email', 'telefone', 'passwordField', 'sexo', 'dataContratacao', 'dataNascimento', 'diploma', 'cargo'].forEach(id => {
+        document.getElementById(id).required = false;
+    });
+});
+document.getElementById('newMode').addEventListener('change', function() {
+    document.getElementById('newFields').style.display = 'block';
+    ['id', 'nome', 'sobrenome', 'email', 'telefone', 'passwordField', 'sexo', 'dataContratacao', 'dataNascimento', 'diploma', 'cargo'].forEach(id => {
+        document.getElementById(id).required = true;
+    });
+});
+</script>
 <script src="script.js"></script>
 <script src="m.js"></script>
 <link rel="stylesheet" href="style.css">
