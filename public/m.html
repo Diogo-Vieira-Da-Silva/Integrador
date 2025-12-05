@@ -133,7 +133,7 @@
                     <div class="text-center mb-5">
                         <div class="d-flex justify-content-center align-items-center mb-2">
                             <button onclick="showCare(${index})" class="btn btn-info btn-custom me-2">Cuidado</button>
-                            <button onclick="showPatientDetails(${index})" class="btn btn-outline-primary btn-custom me-2">${patient.primeiroNome} ${patient.sobrenome}</button>
+                            <button onclick="showPatientDetails(${index})" class="btn btn-outline-primary btn-custom me-2">${patient.primeiro_nome} ${patient.sobrenome}</button>
                             <button onclick="deletePatient(${index})" class="btn btn-danger btn-custom">Deletar</button>
                         </div>
                         <button onclick="showCareHistory(${index})" class="btn btn-warning btn-custom">Histórico</button>
@@ -148,15 +148,15 @@
             const patients = JSON.parse(localStorage.getItem('patients')) || [];
             const patient = patients[index];
             document.getElementById('contentArea').innerHTML = `
-                <h1 class="title mb-4">${patient.primeiroNome} ${patient.sobrenome}</h1>
-                <p><strong>Data de Nascimento:</strong> ${patient.dataNascimento}</p>
+                <h1 class="title mb-4">${patient.primeiro_nome} ${patient.sobrenome}</h1>
+                <p><strong>Data de Nascimento:</strong> ${patient.data_nascimento}</p>
                 <p><strong>CPF:</strong> ${patient.cpf}</p>
                 <p><strong>Endereço:</strong> ${patient.endereco}</p>
                 <p><strong>Telefone:</strong> ${patient.telefone}</p>
-                <p><strong>Nome do Responsável:</strong> ${patient.nomeResponsavel || 'N/A'}</p>
-                <p><strong>Telefone do Responsável:</strong> ${patient.telefoneResponsavel || 'N/A'}</p>
+                <p><strong>Nome do Responsável:</strong> ${patient.nome_responsavel || 'N/A'}</p>
+                <p><strong>Telefone do Responsável:</strong> ${patient.telefone_responsavel || 'N/A'}</p>
                 <p><strong>Procedimento:</strong> ${patient.procedimento}</p>
-                <p><strong>Histórico de Doenças:</strong> ${patient.historicoDoencas || 'N/A'}</p>
+                <p><strong>Histórico de Doenças:</strong> ${patient.historico_doencas || 'N/A'}</p>
                 <p><strong>Medicações:</strong> ${patient.medicacoes || 'N/A'}</p>
                 <p><strong>Sexo:</strong> ${patient.sexo}</p>
                 <p><strong>Prioridade:</strong> ${patient.prioridade}</p>
@@ -196,7 +196,7 @@
             const patients = JSON.parse(localStorage.getItem('patients')) || [];
             const patient = patients[index];
             document.getElementById('contentArea').innerHTML = `
-                <h1 class="title mb-4">Cuidados para ${patient.primeiroNome} ${patient.sobrenome}</h1>
+                <h1 class="title mb-4">Cuidados para ${patient.primeiro_nome} ${patient.sobrenome}</h1>
                 <form id="careForm" onsubmit="saveCare(event, ${index})">
                     <div class="mb-3">
                         <label>Tipos de Cuidado:</label><br>
@@ -267,7 +267,7 @@
             let hasCares = false;
             patients.forEach((patient, pIndex) => {
                 if (patient.cares && patient.cares.length > 0) {
-                    historyHtml += `<h3>${patient.primeiroNome} ${patient.sobrenome}</h3>`;
+                    historyHtml += `<h3>${patient.primeiro_nome} ${patient.sobrenome}</h3>`;
                     patient.cares.forEach((care, cIndex) => {
                         const statusClass = care.status === "Concluído" ? "text-success" : "text-danger";
                         historyHtml += `
@@ -309,7 +309,7 @@
         function showCareHistory(index) {
             const patients = JSON.parse(localStorage.getItem('patients')) || [];
             const patient = patients[index];
-            let historyHtml = `<h1 class="title mb-4">Histórico de Cuidados para ${patient.primeiroNome} ${patient.sobrenome}</h1>`;
+            let historyHtml = `<h1 class="title mb-4">Histórico de Cuidados para ${patient.primeiro_nome} ${patient.sobrenome}</h1>`;
             if (patient.cares && patient.cares.length > 0) {
                 patient.cares.forEach((care, i) => {
                     historyHtml += `
