@@ -44,7 +44,7 @@ Ao final do processo, consegui concluir um sistema funcional, estável e integra
 
 ⚙️ Como configurar o projeto 
 
-📌 1. Inicialização do Node.js No terminal, execute: npm init -y Em seguida, instale as dependências principais: npm install express mysql2 Esses pacotes são essenciais para que o servidor funcione e possa se comunicar com o MySQL.
+📌 1. Inicialização do Node.js No terminal, execute: npm init -y Em seguida, instale as dependências principais: npm install express mysql2 Esses pacotes são essenciais para que o servidor funcione e possa se comunicar com o MySQL, eles que instalam o package-lock.json, node_modules e package.json.
 
  📁 Estrutura recomendada do projeto Crie a seguinte organização de arquivos: /public ├── index.html ├── script.js └── style.css server.js A pasta public deve conter os arquivos do front-end e o arquivo server.js será responsável pelo servidor Express e pela conexão com o MySQL. 
  
