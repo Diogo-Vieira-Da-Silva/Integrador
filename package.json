@@ -2,15 +2,17 @@
   "name": "integrador",
   "version": "1.0.0",
   "description": "Prioridades:",
-  "main": "m.js",
+  "main": "electron-main.js",
   "scripts": {
     "start": "node m.js",
+    "electron": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "electron": "^37.2.3",
     "express": "^5.2.1"
   }
 }
