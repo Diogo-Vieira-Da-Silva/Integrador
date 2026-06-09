@@ -1,3 +1,23 @@
+const API_BASE_URL = 'http://localhost:3000';
+
+async function fetchJson(url, options) {
+    const response = await fetch(url, options);
+    const contentType = response.headers.get('content-type') || '';
+
+    if (!response.ok) {
+        const errorText = contentType.includes('application/json')
+            ? JSON.stringify(await response.json())
+            : await response.text();
+        throw new Error(errorText || `HTTP ${response.status}`);
+    }
+
+    if (contentType.includes('application/json')) {
+        return response.json();
+    }
+
+    return response.text();
+}
+
   function initPasswordToggle() {
     const passwordField = document.getElementById('passwordField');
     const toggleButton = document.getElementById('togglePassword');
@@ -80,8 +100,7 @@ window.addEventListener('load', function () {
 
         if (isExisting) {
             // Login with existing ID
-            fetch('/enfermeiros/' + id)
-            .then(response => response.json())
+            fetchJson(API_BASE_URL + '/enfermeiros/' + id)
             .then(existingNurse => {
                 if (existingNurse) {
                     console.log('Enfermeiro existente encontrado:', existingNurse);
@@ -143,12 +162,11 @@ window.addEventListener('load', function () {
             console.log(data);
 
             // Enviar dados para o servidor
-            fetch('/enfermeiros', {
+            fetchJson(API_BASE_URL + '/enfermeiros', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             })
-            .then(response => response.json())
             .then(result => {
                 console.log('Enfermeiro adicionado:', result);
                 localStorage.setItem('currentUser', JSON.stringify(data));

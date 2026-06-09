@@ -73,13 +73,14 @@
 
     <script>
         const saved = JSON.parse(localStorage.getItem('currentUser'));
+        const API_BASE_URL = 'http://localhost:3000';
         if (saved && saved.nome) {
             document.getElementById('welcomeMessage').textContent = 'Bem vindo(a) ' + saved.nome;
         }
 
         // Load patients from DB
         if (saved && saved.id) {
-            fetch('/pacientes?nurse_id=' + saved.id)
+            fetch(API_BASE_URL + '/pacientes?nurse_id=' + saved.id)
             .then(response => response.json())
             .then(patients => {
                 localStorage.setItem('patients', JSON.stringify(patients));
@@ -171,14 +172,14 @@
             if (confirm('Tem certeza que deseja deletar este paciente?')) {
                 let patients = JSON.parse(localStorage.getItem('patients')) || [];
                 const patientId = patients[index].id;
-                fetch('/pacientes/' + patientId, {
+                fetch(API_BASE_URL + '/pacientes/' + patientId, {
                     method: 'DELETE'
                 })
                 .then(response => response.json())
                 .then(result => {
                     console.log('Paciente deletado:', result);
                     // Reload patients
-                    fetch('/pacientes?nurse_id=' + saved.id)
+                    fetch(API_BASE_URL + '/pacientes?nurse_id=' + saved.id)
                     .then(response => response.json())
                     .then(updatedPatients => {
                         localStorage.setItem('patients', JSON.stringify(updatedPatients));
@@ -362,7 +363,7 @@
             };
 
             // Enviar dados para o servidor
-            fetch('/pacientes', {
+            fetch(API_BASE_URL + '/pacientes', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(patient)
@@ -371,7 +372,7 @@
             .then(result => {
                 console.log('Paciente adicionado:', result);
                 // Reload patients from DB
-                fetch('/pacientes?nurse_id=' + saved.id)
+                fetch(API_BASE_URL + '/pacientes?nurse_id=' + saved.id)
                 .then(response => response.json())
                 .then(updatedPatients => {
                     localStorage.setItem('patients', JSON.stringify(updatedPatients));
@@ -565,6 +566,5 @@
             </div>
         </div>
     </div>
-<script src="m.js"></script>
 </body>
 </html>
