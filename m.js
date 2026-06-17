@@ -1,8 +1,19 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
+const nodemailer = require("nodemailer");
 
 const app = express();
+
+// Configuração do Nodemailer (Substitua pelos seus dados de SMTP)
+// Para Gmail, use "Senhas de App"
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'seu-email@gmail.com', 
+    pass: 'sua-senha-de-app' 
+  }
+});
 
 app.use(express.json());
 app.use((req, res, next) => {
@@ -303,6 +314,31 @@ app.post("/pacientes", (req, res) => {
       res.json({ message: "Paciente adicionado com sucesso!" });
     }
   );
+});
+
+app.post("/notify-care", (req, res) => {
+  const { email, nurseName, patientName, careDetails, time } = req.body;
+
+  if (!email || !email.includes('@')) {
+    return res.status(400).json({ message: "E-mail inválido para envio." });
+  }
+
+  const mailOptions = {
+    from: '"SenseCare 2.0" <seu-email@gmail.com>',
+    to: email,
+    subject: `Lembrete de Cuidado: ${patientName}`,
+    text: `Olá ${nurseName},\n\nEste é um lembrete de cuidado para o paciente ${patientName}.\n\nCuidado agendado: ${careDetails}\nHorário: ${time}\n\nPor favor, verifique o sistema para mais detalhes.`,
+    html: `<p>Olá <strong>${nurseName}</strong>,</p><p>Este é um lembrete de cuidado para o paciente <strong>${patientName}</strong>.</p><ul><li><strong>Cuidado:</strong> ${careDetails}</li><li><strong>Horário:</strong> ${time}</li></ul><p>Atenciosamente,<br>Equipe SenseCare.</p>`
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error("Erro ao enviar e-mail:", error);
+      return res.status(500).json({ message: "Erro ao enviar e-mail" });
+    }
+    console.log("E-mail enviado: " + info.response);
+    res.json({ message: "Notificação enviada com sucesso!" });
+  });
 });
 
 app.delete("/pacientes/:id", (req, res) => {

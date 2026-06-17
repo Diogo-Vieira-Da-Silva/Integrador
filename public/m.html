@@ -91,6 +91,58 @@
             });
         }
 
+        // Função para verificar cuidados agendados
+        function checkScheduledCares() {
+            const patients = JSON.parse(localStorage.getItem('patients')) || [];
+            const now = new Date();
+            // Formata data e hora para comparar com os inputs (YYYY-MM-DD e HH:mm)
+            const currentDate = now.toISOString().split('T')[0];
+            const currentTime = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+
+            let updated = false;
+            patients.forEach(patient => {
+                if (patient.cares) {
+                    patient.cares.forEach(care => {
+                        // Verifica se o cuidado está pendente, se é o momento exato e se ainda não foi alertado
+                        if (care.status === "Pendente" && !care.alerted && care.data === currentDate && care.horario === currentTime) {
+                            
+                            care.alerted = true; // Marca para não repetir o alerta
+                            updated = true;
+
+                            const patientFullName = `${patient.primeiro_nome} ${patient.sobrenome}`;
+                            const careTypes = care.cuidados.join(', ');
+
+                            // 1. Alerta na tela
+                            alert(`⏰ LEMBRETE DE CUIDADO!\n\nPaciente: ${patientFullName}\nCuidados: ${careTypes}\nHorário: ${care.horario}`);
+
+                            // 2. Envio de E-mail (se o enfermeiro tiver e-mail válido)
+                            if (saved && saved.cpfEmail && saved.cpfEmail.includes('@')) {
+                                fetch(API_BASE_URL + '/notify-care', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({
+                                        email: saved.cpfEmail,
+                                        nurseName: saved.nome,
+                                        patientName: patientFullName,
+                                        careDetails: careTypes,
+                                        time: care.horario
+                                    })
+                                }).catch(err => console.error('Erro na requisição de e-mail:', err));
+                            }
+                        }
+                    });
+                }
+            });
+
+            if (updated) {
+                localStorage.setItem('patients', JSON.stringify(patients));
+            }
+        }
+
+        // Inicia o monitoramento a cada 30 segundos
+        setInterval(checkScheduledCares, 30000);
+        checkScheduledCares(); // Executa uma vez ao carregar
+
         function logout() {
             localStorage.removeItem('passwordVisible');
             window.location.href = 'index.html';
@@ -238,7 +290,8 @@
                 observacoes: observacoes,
                 data: dataCuidado,
                 horario: horarioCuidado,
-                status: "Pendente"
+                status: "Pendente",
+                alerted: false
             };
             let patients = JSON.parse(localStorage.getItem('patients')) || [];
             if (!patients[index].cares) patients[index].cares = [];
