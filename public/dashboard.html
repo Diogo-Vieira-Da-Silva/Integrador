@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SenseCare - Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏥 SenseCare Dashboard</h1>
+            <p>Sistema de Gerenciamento de Pacientes e Enfermeiros</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="pacientes">
+                👥 Pacientes
+            </button>
+            <button class="tab-btn" data-tab="enfermeiros">
+                👨‍⚕️ Enfermeiros
+            </button>
+        </nav>
+
+        <div class="content">
+            <!-- TAB PACIENTES -->
+            <div id="pacientes" class="tab-content active">
+                <div class="section-header">
+                    <h2>Pacientes Cadastrados</h2>
+                    <div class="controls">
+                        <input type="text" id="searchPacientes" placeholder="🔍 Buscar por nome...">
+                        <span id="countPacientes" class="count">Total: 0</span>
+                    </div>
+                </div>
+                
+                <div id="pacientesList" class="records-container">
+                    <div class="loading">Carregando pacientes...</div>
+                </div>
+            </div>
+
+            <!-- TAB ENFERMEIROS -->
+            <div id="enfermeiros" class="tab-content">
+                <div class="section-header">
+                    <h2>Enfermeiros Cadastrados</h2>
+                    <div class="controls">
+                        <input type="text" id="searchEnfermeiros" placeholder="🔍 Buscar por nome...">
+                        <span id="countEnfermeiros" class="count">Total: 0</span>
+                    </div>
+                </div>
+                
+                <div id="enfermeirosList" class="records-container">
+                    <div class="loading">Carregando enfermeiros...</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 SenseCare - Sistema de Saúde Inteligente</p>
+        </footer>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
