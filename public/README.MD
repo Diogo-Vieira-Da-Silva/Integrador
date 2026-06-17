@@ -50,7 +50,7 @@ These two parts work together: SQL provides the initial data, Express exposes th
 
 In addition, edits and additions were made to the `dashboard.html`, `dashboard.js`, and `dashboard.css` files, allowing you to view nurses and patients in the database, which can be accessed via `http://localhost:3000/dashboard.html`.
 
-The other addition was a real-time notification system for patient care. The application monitors scheduled care in the background and triggers browser alerts exactly at the set time. Additionally, if the nurse is registered with a valid email address, the system automatically sends a notification email using NodeMailer, ensuring that important care tasks are never missed.
+The other addition was a real-time notification system for patient care. The application monitors scheduled care in the background and triggers browser alerts exactly at the set time. 
 --------------
 
 ⚙️ How to configure the project
@@ -118,7 +118,7 @@ Essas duas partes funcionam em conjunto: o SQL fornece os dados iniciais, o Expr
 
 Além disso, foram feitas edições e adições dos arquivos `dashboard.html`  `dashboard.js` e `dashboard.css` que te permitem visualizar os enfermeiros e pacientes no banco de dados que pode ser acessado pelo  `http://localhost:3000/dashboard.html` .
 
-A outra adição foi um sistema de notificações em tempo real para os cuidados dos pacientes. A aplicação agora monitora os horários agendados em segundo plano e dispara alertas no navegador exatamente no horário previsto. Além disso, caso o enfermeiro possua um e-mail válido cadastrado, o sistema envia automaticamente um lembrete via e-mail utilizando o NodeMailer, garantindo que nenhum cuidado importante seja esquecido
+A outra adição foi um sistema de notificações em tempo real para os cuidados dos pacientes. A aplicação agora monitora os horários agendados em segundo plano e dispara alertas no navegador exatamente no horário previsto.
 
 --------------
 
