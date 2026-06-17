@@ -48,6 +48,7 @@ The second addition was Electron. I created a specific entry file for the deskto
 
 These two parts work together: SQL provides the initial data, Express exposes the API, and Electron simply packages everything into a window suitable for desktop use.
 
+In addition, edits and additions were made to the `dashboard.html`, `dashboard.js`, and `dashboard.css` files, allowing you to view nurses and patients in the database, which can be accessed via `http://localhost:3000/dashboard.html`.
 --------------
 
 ⚙️ How to configure the project
@@ -112,6 +113,8 @@ Além da versão web, o sistema passou a contar com duas adições importantes. 
 A segunda adição foi o Electron. Criei um arquivo de entrada específico para o desktop, que inicia o servidor Express automaticamente e abre uma janela apontando para `http://localhost:3000`. Assim, a aplicação continua funcionando como site, mas também pode ser usada como aplicativo de computador, com a mesma interface e os mesmos dados carregados do servidor local.
 
 Essas duas partes funcionam em conjunto: o SQL fornece os dados iniciais, o Express expõe a API e o Electron apenas embala tudo em uma janela própria para uso desktop.
+
+Além disso, foram feitas edições e adições dos arquivos `dashboard.html`  `dashboard.js` e `dashboard.css` que te permitem visualizar os enfermeiros e pacientes no banco de dados que pode ser acessado pelo  `http://localhost:3000/dashboard.html` .
 
 --------------
 
